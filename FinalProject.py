@@ -3,16 +3,14 @@ import csv
 import tkinter as tk
 from tkinter import messagebox
 
-# Define the absolute path for the records.csv file
+#aboslute path thing. change it to whatever path you choose to put in
 FILE_NAME = r"C:\Users\Joss\Documents\HTML practice\Kapebara Alpha\IT0011_TUAZON\Final Project\records.csv"
 
-# Ensure the file exists and has a header
 if not os.path.exists(FILE_NAME):
     with open(FILE_NAME, "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(["First Name", "Middle Name", "Last Name", "Birthday (MM-DD-YYYY)", "Gender"])
 
-# Function to sign up (add a new record)
 def sign_up():
     def save_record():
         first_name = entry_first.get().strip()
@@ -25,7 +23,6 @@ def sign_up():
             messagebox.showerror("Error", "All fields except middle name are required!")
             return
 
-        # Validate birthday format (MM-DD-YYYY)
         try:
             month, day, year = map(int, birthday.split("-"))
             if not (1 <= month <= 12 and 1 <= day <= 31 and 1900 <= year <= 2100):
@@ -68,7 +65,6 @@ def sign_up():
 
     tk.Button(sign_up_window, text="Save", command=save_record).grid(row=5, column=0, columnspan=2, pady=10)
 
-# Function to view all records
 def view_records():
     try:
         with open(FILE_NAME, "r", newline="") as file:
@@ -87,7 +83,6 @@ def view_records():
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred: {e}")
 
-# Function to search for a record
 def search_record():
     def perform_search():
         query = search_entry.get().strip().lower()
@@ -98,7 +93,7 @@ def search_record():
         try:
             with open(FILE_NAME, "r", newline="") as file:
                 reader = csv.reader(file)
-                next(reader)  # Skip header
+                next(reader)  
                 results = [", ".join(row) for row in reader if any(query in field.lower() for field in row)]
             
             if results:
@@ -120,7 +115,6 @@ def search_record():
 
     tk.Button(search_window, text="Search", command=perform_search).pack(pady=5)
 
-# Create the main GUI
 root = tk.Tk()
 root.title("Student Record Management")
 
